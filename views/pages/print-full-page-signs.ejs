@@ -1,0 +1,97 @@
+<title>nessumsar Retail Package - Sign Making System</title>
+<link rel="stylesheet" type="text/css" href="css/store-system-main.css">
+<link rel="stylesheet" type="text/css" href="css/make-signs.css">
+
+
+            <h1 id="nessumsar-title">nessumsar Sign Making System 2.0</h1>
+
+            <div id="top-data-section">
+                <div id="sign-maker-search-results" class="top-data-half">
+                    <h3>You searched for item code "<%= itemCodeFormField %>"</h3>
+            
+                    <% if(response.length == 1)  { %>
+                        <h3>1 Result Found for Your Search:</h3>
+                        <% } else { %>
+                          <h3>Sorry, no items with that UPC or PLU code were found. Please try again.</h3>
+                        <% } %>
+                    
+                    <main id="products">
+                      <div id="food-products" class="food-products">
+                        <div id="search-results" class="food-category-section">
+                        <% for(var i = 0; i < response.length; i++) { %>
+                        <div id="food-item-<%= response[i].itemCode %>" class="food-item-section">
+                          <h3> <%= response[i].itemDescription %> <%= response[i].itemType %></h3>
+                          <h3><%= response[i].itemCode %></h3>
+                          <div id="price-amount-<%= response[i].itemCode %>" class="price-and-amount">
+                            <h4><%= (response[i].itemPrice).toFixed(2) %></h4>
+                          </div>
+                        </div>
+                        <% } %>
+                      </div>
+                    </main>
+                </div>
+
+                <div id="sign-maker-search-form" class="top-data-half">
+                    <form action="/print-full-page-signs" method="POST">
+                        <label for="itemNumberInput"><h2>Full Page Sign Maker</h2></label>
+                        <input id="item-number-input" name="itemNumberInput" placeholder="input code number here" onfocus="this.value = ''" onblur="this.placeholder = 'input code number here'"></input>
+                        <label for="countryOriginInput"><h5>If entering a Produce item, please enter the Country of Origin and Product Grade</h5></label>
+                        <input id="country-origin-input" name="countryOriginInput" placeholder="input country of origin and grade" onfocus="this.value = ''" onblur="this.placeholder = 'input country of origin and grade'"></input>
+                        <input type="submit" value="click to generate sign"></input>
+                    </form>
+                    <button onclick="window.print()">Print All Signs</button>
+                    <form action="/clear-generated-signs">        
+                        <input type="submit" value="Clear Generated Signs"></input>
+                    </form>
+ 
+                </div>
+            </div>
+
+            <div id="signs-generated-title"><h3>Signs Generated</h3></div>
+            <div id="signs-generated">
+                      
+                <% for(var i = 0; i < signArray.length; i++) { %>
+                    <div id="preview-<%= signArray[i].itemDescription %>" class="signs-generated-preview">
+                        <h3><%= signArray[i].itemDescription %></h3>
+                        <h3><%= signArray[i].itemType %></h3>
+                        <h3><%= signArray[i].itemCode %></h3>
+                    </div>
+                <% } %>
+            </div>
+            <br><br>
+            
+            
+            <div id="signs-to-print">
+                <% for(var i = 0; i < signArray.length; i++) { %>                   
+                    <div class='sign' id="generated-sign-<%= signArray[i].itemCode %>">
+                        <h3><%= signArray[i].itemDescription %> <%= signArray[i].itemType %><span>Product of <%= signArray[i].origin %> </span></h3>
+                        <% if (signArray[i].weighedItem === true)  { %>
+                            <h1><%= (signArray[i].itemPrice * 0.454).toFixed(2) %></h1>
+                            <h4 id='h4-ea'>/LB <%= (signArray[i].itemPrice).toFixed(2) %>/KG</h4>
+                            <% } else  { %>
+                                <h1><%= signArray[i].itemPrice %></h1>
+                                <h4 id='h4-ea'>Each</h4>
+                            <% } %>    
+                        
+                    </div>
+                    <% } %>
+            </div>
+
+            
+
+
+
+
+<!-- STORE DATA CONFIG FILE-->
+<script src="data/site-data-config.js"></script>
+
+<!-- FYI MESSAGES DISPLAYED ON SCREENS-->
+<script src="scripts/show-notices.js"></script>
+
+<!-- CLICK TO ENTER-->
+<script src="scripts/global-click-to-enter.js"></script>
+
+<!-- LOOK UP ITEM CODES TO MAKE THE SIGNS -->
+<script src="scripts/makesigns-lookupitemcodeforsign.js"></script>
+
+</html>

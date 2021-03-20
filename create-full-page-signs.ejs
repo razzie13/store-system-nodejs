@@ -1,0 +1,71 @@
+<title>nessumsar Retail Package - Sign Making System</title>
+<link rel="stylesheet" type="text/css" href="public/css/store-system-main.css">
+<link rel="stylesheet" type="text/css" href="public/css/make-signs.css">
+
+<div id="staff-notice"></div>
+<div id="sign-inputs">
+    <h2 id="store-name"></h2>
+    
+<form action="/store-system/print-full-page-signs" method="POST">
+    <label for="itemNumberInput"><h2>Full Page Sign Maker</h2></label>
+    <input id="item-number-input" name="itemNumberInput" placeholder="input code number here" onfocus="this.value = ''" onblur="this.placeholder = 'input code number here'"></input>
+    <label for="countryOriginInput"><h5>If entering a Produce item, please enter the Country of Origin and Product Grade</h5></label>
+    <input id="country-origin-input" name="countryOriginInput" placeholder="input country of origin and grade" onfocus="this.value = ''" onblur="this.placeholder = 'input country of origin and grade'"></input>
+    <input type="submit" value="click to enter"></input>
+</form>
+
+</div>
+<div id="sign-inputted">
+    <h3 id="total-signs-in-list"></h3>
+    
+</div>
+
+
+<div id="signs-to-print">
+
+</div>
+
+
+
+
+
+<script>
+let fullPageListArray = [];
+    function pushListItemToArray()  {
+    console.log('function pushListItemToArray')
+
+    let newListItem = document.getElementById('item-number-input').value;
+    let codeListItem = document.createElement('li');
+
+    fullPageListArray.push(newListItem); 
+    console.log(fullPageListArray);
+
+    
+    
+    document.getElementById('total-signs-in-list').innerHTML = 'You have generated ' + fullPageListArray.length + ' full-page signs.'
+    
+    //for (let i = 0; i < fullPageListArray.length; i++)  {
+    //    codeListItem.innerText = fullPageListArray[i]
+    //}
+    //document.getElementById('signs-in-list-to-print').appendChild(codeListItem);
+
+}
+
+</script>
+
+
+
+
+<!-- STORE DATA CONFIG FILE-->
+<script src="data/site-data-config.js"></script>
+
+<!-- FYI MESSAGES DISPLAYED ON SCREENS-->
+<script src="scripts/show-notices.js"></script>
+
+<!-- CLICK TO ENTER-->
+<script src="scripts/global-click-to-enter.js"></script>
+
+<!-- LOOK UP ITEM CODES TO MAKE THE SIGNS -->
+<script src="scripts/makesigns-lookupitemcodeforsign.js"></script>
+
+</html>

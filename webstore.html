@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nessumsar Retail Package - Web Store</title>
+    <link rel="stylesheet" type="text/css" href="css/store-system-main.css">
+    <link rel="stylesheet" type="text/css" href="css/webstore.css">
+</head>
+<body>
+
+<header>
+    <h1>THIS IS THE .HTML FILE</h1>
+    <div id="header-left">
+        <h2 id="store-name"></h2>
+        <h6>A website development project by Greg Rasmussen</h6>
+    </div>
+    <% let newCategoryArray = []; %>
+    <% let newDepartmentArray = []; %>
+
+    <div id="header-right">
+        <div id="top-of-header-right">
+            <span id="welcome-guest">Welcome, Guest!</span>
+            <span id="shopping-cart">order pickup: 
+                <% if (customerOrderAtWebStore.length == 0)  { %>
+                start a new cart by clicking on any item </span>
+                <% } else  { %>
+                    <%= customerOrderAtWebStore.length %> items in cart</span> | <span id="view-your-cart"><a href="webstore-cart">view your cart</a></span>
+                <% } %>
+        </div>
+        
+
+    </div>
+    
+    
+</header>
+
+    <div id="below-header">
+        <div id="below-header-left">
+            <h4 id="search-number-of-items">Search from <%= data.length %> items!</h4>
+        </div>
+        <div id="below-header-center-left">
+            <!-- SEARCH BAR PARTIAL BEGIN -->
+            <%- include('./partials-search-items.ejs') %>
+            <!-- SEARCH BAR PARTIAL END -->
+        </div>
+        <div id="below-header-center-right">
+            <!-- DROPDOWN MENU PARTIAL BEGIN -->
+            <%- include('./partials-dropdown-select.ejs') %>
+            <!-- DROPDOWN MENU PARTIAL END -->
+        </div>
+        <div id="below-header-right">
+            open | close 8:00PM
+        </div>
+        <div id="category-dropdown"></div>
+        
+         </div>
+
+    <div id="banner-order-pickup">
+        <h2>curbside pickup</h2>
+        <h4>Help Fight COVID-19 - Free Next-Day Pickup on orders of $60 or more!</h4>
+    </div>
+
+    
+    <main id="products">
+        <div id="food-products" class="food-items">
+
+            <% for (let i = 0; i < data.length; i++)  { %>
+                <%     newCategoryArray.push(data[i].itemCategory); %>
+                <%     newDepartmentArray.push(data[i].itemDepartment); %>
+                <% } %>
+        
+                <% let uniqueCategoryList = [...new Set(newCategoryArray)] %>
+                <% uniqueCategoryList.sort(); %>
+
+                <% let uniqueDepartmentList = [...new Set(newDepartmentArray)] %>
+                <% uniqueDepartmentList.sort(); %>
+
+                <!-- MEAT FEATURES -->
+                <div id="meat-features" class="food-category-section food-category-front-page-feature">
+                    <h2>Great Weekly Sales on Meat items!<span class="shop-all-department-items">shop all meats</span></h2>
+
+                    <% for(var i = 0; i < data.length; i++) { %>
+                        
+                        <% if (data[i].itemDepartment == "Meat" && data[i].promo == true)  { %>
+                            <!-- begin item card -->
+                            <form action="/webstore-add-to-cart" method="POST">
+                                <div id="food-item-<%= data[i].itemCode %>" class="food-item-section">
+                                    <% if (data[i].itemImage == "images/produce/") { %>
+                                        <img src="images/produce/z-image-not-available.jpg" width="200">
+                                    <% } else { %>
+                                    <img src=<%= data[i].itemImage %> width="200">
+                                    <% } %>
+                                    <h3> <%= data[i].itemDescription %> <%= data[i].itemType %></h3>
+                                        <div id="price-amount-<%= data[i].itemCode %>" class="price-and-amount">
+                                            <div class="price-and-amount-form">
+                                                <% if (data[i].weighedItem == true) { %>
+                                                    <h4><%= (data[i].itemPrice * 0.454).toFixed(2) %>/lb</h4>
+                                                        <% } else { %>
+                                                    <h4><%= data[i].itemPrice %>/ea</h4>
+                                                    <% } %>
+                                                    
+                                                        <label for="quantity">Quantity: </label>
+                                                        <input type="number" name="quantity" class="price-and-amount-quantity" min="0">
+                                                        <input type="text" value="<%= data[i].itemCode %>" name="itemPluCode" style="display: none;">
+                                            </div>
+                                                <input type="submit" class="add-to-order-button" value="add to order">
+                                        </div>
+                                </div>
+                            </form>
+                            <!-- end item card --> 
+                        <% } %>
+                    <% } %>
+                </div>
+
+                <!-- PRODUCE FEATURES -->
+                <div id="produce-features" class="food-category-section food-category-front-page-feature">
+                    <h2>Great Weekly Sales on Produce items!<span class="shop-all-department-items">shop all produce</span></h2>
+
+                    <% for(var i = 0; i < data.length; i++) { %>
+                        
+                        <% if (data[i].itemDepartment == "Produce" && data[i].promo == true)  { %>
+                            <!-- begin item card -->
+                            <form action="/webstore-add-to-cart" method="POST">
+                                <div id="food-item-<%= data[i].itemCode %>" class="food-item-section">
+                                    <% if (data[i].itemImage == "images/produce/") { %>
+                                        <img src="images/produce/z-image-not-available.jpg" width="200">
+                                    <% } else { %>
+                                    <img src=<%= data[i].itemImage %> width="200">
+                                    <% } %>
+                                    <h3> <%= data[i].itemDescription %> <%= data[i].itemType %></h3>
+                                        <div id="price-amount-<%= data[i].itemCode %>" class="price-and-amount">
+                                            <div class="price-and-amount-form">
+                                                <% if (data[i].weighedItem == true) { %>
+                                                    <h4><%= (data[i].itemPrice * 0.454).toFixed(2) %>/lb</h4>
+                                                        <% } else { %>
+                                                    <h4><%= data[i].itemPrice %>/ea</h4>
+                                                    <% } %>
+                                                    
+                                                        <label for="quantity">Quantity: </label>
+                                                        <input type="number" name="quantity" class="price-and-amount-quantity" min="0">
+                                                        <input type="text" value="<%= data[i].itemCode %>" name="itemPluCode" style="display: none;">
+                                            </div>
+                                                <input type="submit" class="add-to-order-button" value="add to order">
+                                        </div>
+                                </div>
+                            </form>
+                            <!-- end item card --> 
+                        <% } %>
+                    <% } %>
+                </div>
+
+
+                 <!-- GROCERY FEATURES -->
+                 <div id="grocery-features" class="food-category-section food-category-front-page-feature">
+                    <h2>Great Weekly Sales on Grocery items!<span class="shop-all-department-items">shop all grocery</span></h2>
+
+                    <% for(var i = 0; i < data.length; i++) { %>
+                        
+                        <% if (data[i].itemDepartment == "Grocery" && data[i].promo == true)  { %>
+                            <!-- begin item card -->
+                            <form action="/webstore-add-to-cart" method="POST">
+                                <div id="food-item-<%= data[i].itemCode %>" class="food-item-section">
+                                    <% if (data[i].itemImage == "images/produce/") { %>
+                                        <img src="images/produce/z-image-not-available.jpg" width="200">
+                                    <% } else { %>
+                                    <img src=<%= data[i].itemImage %> width="200">
+                                    <% } %>
+                                    <h3> <%= data[i].itemDescription %> <%= data[i].itemType %></h3>
+                                        <div id="price-amount-<%= data[i].itemCode %>" class="price-and-amount">
+                                            <div class="price-and-amount-form">
+                                                <% if (data[i].weighedItem == true) { %>
+                                                    <h4><%= (data[i].itemPrice * 0.454).toFixed(2) %>/lb</h4>
+                                                        <% } else { %>
+                                                    <h4><%= data[i].itemPrice %>/ea</h4>
+                                                    <% } %>
+                                                    
+                                                        <label for="quantity">Quantity: </label>
+                                                        <input type="number" name="quantity" class="price-and-amount-quantity" min="0">
+                                                        <input type="text" value="<%= data[i].itemCode %>" name="itemPluCode" style="display: none;">
+                                            </div>
+                                                <input type="submit" class="add-to-order-button" value="add to order">
+                                        </div>
+                                </div>
+                            </form>
+                            <!-- end item card --> 
+                        <% } %>
+                    <% } %>
+                </div>
+                
+                <!-- END NEW SHOW-CERTAIN-THINGS WAY TO DISPLAY SITE -->
+
+               
+        </div>
+    </main>
+
+    <footer>
+        <div id="footer-store-name">Town Grocery Store is a fake store that sells nothing except the website development skills of very real web developer Greg Rasmussen, who built this site from scratch using NodeJS and MongoDB. You can visit his page at gregrasmussen.com to see his works and portfolio.</div>
+        <div>
+            <ul>
+                <li>1234 Rue Fake Street</li>
+                <li>Fake, Ontario</li>
+                <li>Canada</li>
+            </ul>
+        </div>
+        <div>
+            <ul>
+                <li>Fake Jobs</li>
+                <li>Fake Become a Supplier</li>
+            </ul>
+        </div>
+        <div>
+            <ul>
+                <li>Fake Facebook</li>
+                <li>Fake Instagram</li>
+                <li>Fake Linkedin</li>
+                <li>Fake Twitter</li>
+            </ul>
+        </div>
+        
+    </footer>
+    <div id="footer-copyright">Copyright 2020 Greg Rasmussen</div>
+
+</body>
+</html>
+
+<!-- STORE DATA CONFIG FILE-->
+<script src="data/site-data-config.js"></script>
+
+<!-- EVENT LISTENERS -->  
+<script>
+    document.getElementById('view-your-cart').addEventListener('click', viewCartContents);
+
+    document.getElementById('search-site').addEventListener('click', globalProductSearch);
+</script>

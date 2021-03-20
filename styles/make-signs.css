@@ -1,0 +1,83 @@
+@media screen  {
+            
+    #signs-to-print  {
+        display: none;
+    }
+
+}
+
+@media print and (orientation: landscape) {
+    #sign-inputs, #sign-inputted, #print-signs  {
+        display: none;
+    }
+
+    #signs-to-print  {
+        display: block;
+        /*position: relative;*/
+        max-height: 737.3px;
+        max-width: 942px;
+    
+    }
+
+    #signs-to-print h3  {
+        font-size: 36pt;
+        position: relative;
+        margin-top: 60px;
+        margin-left: 40px;
+        float: left;
+        text-transform: capitalize;
+    }
+
+    #signs-to-print h1  {
+        font-size: 260pt;
+        position: relative;
+        float: right;
+        margin-top: 0px;
+        margin-bottom: 10px;
+        margin-left: 14px;
+        text-align: center;
+        
+    }
+
+    .sign  {
+        border-style: solid;
+        border-width: 10px;
+        border-color: white;
+        position: relative;
+        height: 737.3px;
+        width: 942px;
+        
+        box-sizing: border-box;
+
+
+    }
+
+    h1 span  {
+        font-size: 36pt;
+    }
+
+    h3 span  {
+        font-size: 16px;
+    }
+
+    h4 span  {
+        visibility: hidden;
+    }
+    #h4-ea, #h4-lb  {
+        font-size: 28pt;
+        position: relative;
+        margin-left: 812px;
+        margin-top: 530px;
+    }
+
+    h5  {
+        font-size: 20pt;
+        position: relative;
+        padding-top: 70px;
+    }
+
+    #signs-inputted li  {
+        text-transform: capitalize;
+    }
+
+}

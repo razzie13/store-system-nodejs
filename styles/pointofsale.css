@@ -1,0 +1,136 @@
+body  {
+    background-color: rgb(236, 234, 234);
+    margin: 0;
+    padding: 0;
+}
+#left-side  {
+    float: left;
+    height: 65vh;
+    margin: 20px 0 0 40px;
+}
+#right-side  {
+    float: right;
+    background-color: white;
+    width: 1280px;
+    height: 720px;
+    border-style: hidden;
+    border-radius: 15px;
+    margin: 120px 20px 0 0;
+}
+#item-number-input  {
+    width: 300px;
+    height: 30px;
+    font-weight: 24px;
+    font-weight: bold;
+    border-style: hidden;
+    border-radius: 15px;
+    padding-left: 15px;
+    box-sizing: border-box;
+}
+#check-code-button  {
+    width: 150px;
+    height: 30px;
+    background-color: green;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-style: hidden;
+    border-radius: 15px;
+    margin-left: 14px;
+}
+.item-reciept  {
+    background-color: white;
+    width: 550px;
+    padding: 20px 20px 40px 20px;
+    box-sizing: border-box;
+    text-transform: capitalize;
+    font-size: 14px;
+}
+.item-reciept h2  {
+    margin-bottom: -30px;
+    margin-left: 34px;
+}
+.item-reciept h2 span  {
+    float: right;
+}
+#item-reciept  {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 80%;
+    overflow: scroll;
+}
+#item-reciept button  {
+    width: 20px;
+    height: 20px;
+    color: white;
+    background-color: orangered;
+    border-style: hidden;
+    border-radius: 10px;
+    float: left;
+    margin-top: 3px;
+}
+#item-total h2 {
+    margin-bottom: 10px;
+}
+#item-total span:before {
+    content: '$';
+}
+.small-span  {
+    font-size: 6px;
+}
+#calculate-amount  {
+    margin-top: 40px;
+}
+#return-policy  {
+    font-weight: bold;
+    font-size: 42px;
+    position: absolute;
+    bottom: 32px;
+    left: 40px;
+    color: #333333
+}
+
+#return-policy span  {
+    text-transform: uppercase;
+    font-size: 48px;
+}
+
+@media print  {
+    #item-number-input, #check-code-button, #complete-transaction  {
+        display: none;
+    }
+
+    #return-policy span  {
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    #item-reciept button  {
+        display: none;
+    }
+    #right-side  {
+        display: none;
+    }
+    #item-reciept  {
+        min-height: 80%;
+        overflow: visible;
+    }
+    #return-policy  {
+    font-weight: bold;
+    font-size: 10px;
+    position: absolute;
+    bottom: 32px;
+    left: 40px;
+    color: black;
+    }
+
+    #return-policy span  {
+        text-transform: uppercase;
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 1900px)  {
+    #right-side  {
+        display: none;
+    }
+}

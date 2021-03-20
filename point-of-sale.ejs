@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Point of Sale System</title>
+    <link rel="stylesheet" type="text/css" href="public/css/store-system-main.css">
+    <link rel="stylesheet" type="text/css" href="public/css/pointofsale.css">
+</head>
+<body>
+<div id="left-side">
+    <h2 id="store-name"></h2>
+    <h4 id="reciept-number"></h4><!--year-month-date-hour-minute-second for reciept number-->
+    <form action="/store-system/point-of-sale" method="POST">
+        <input id="item-number-input" name="itemNumberInput" placeholder="input code number here" onfocus="this.value = ''" onblur="this.placeholder = 'input code number here'"></input>
+        <!--<input id="weight-input" name="weightInput" placeholder="number of grams" onfocus="this.value = ''" onblur="this.placeholder = 'number of grams'"></input>-->
+
+        <input type="submit" value="click to enter">
+    </form>
+
+    <div id="item-reciept" class="item-reciept">
+        <!-- added script -->
+        <% for(var i = 0; i < customerOrderAtCheckout.length; i++) { %>
+            <div id="<%= [i] %>" class="space-between-reciept-lines">
+                <h2><%= customerOrderAtCheckout[i].itemDescription %> <%= customerOrderAtCheckout[i].itemType %><span><%= (customerOrderAtCheckout[i].itemPrice).toFixed(2) %></span></h2>
+              <button id=' + [i] + ' onclick=removeListArrayElement(this.id)>X</button>
+              
+            </div>
+            <% } %>
+
+
+
+        <!-- end added script -->
+    </div>
+    <div id="item-total" class="item-reciept">
+       
+        <h2 id="basket-subtotal">SubTotal: <span id="item-subtotal-h2">
+        <% if (customerOrderAtCheckout.length > 0)  { %>
+            <%= recieptSubTotalToString %>
+        <% } else  { %>
+            0.00
+        <% } %>
+        </span></h2>
+        <h2 id="basket-taxes">Taxes:<span id="item-taxes-h2">
+            <% if (customerOrderAtCheckout.length > 0)  { %>
+            <%= recieptTaxesToString %>
+        <% } else  { %>
+            0.00
+        <% } %></span></h2>
+        <h2 id="basket-total">Grocery Total:<span id="item-total-h2">
+            <% if (customerOrderAtCheckout.length > 0)  { %>
+                <%= recieptTotalToString %>
+            <% } else  { %>
+                0.00
+            <% } %>
+        </span></h2>
+
+    </div>
+
+    <form action="/store-system/send-store-reciept-to-database" method="POST">
+        <input type="submit" value="complete transaction">
+    </form>
+    <!--
+    <button id="complete-transaction" onclick="completeTransaction()">Complete Transaction</button>
+    
+    <div id="return-policy">
+        <p><span>keep your reciept.</span> Many Products can be returned within 7 days of purchase.</p>
+    </div>
+    -->
+</div>
+<div id="right-side">
+    <iframe width="1280" height="720" src="https://www.youtube.com/embed/1VAZmcJ6_50?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+</body>
+
+<!-- STORE DATA CONFIG FILE-->
+<script src="data/site-data-config.js"></script>
+
+<!-- CLICK TO ENTER-->
+<script src="scripts/global-click-to-enter.js"></script>
+
+<!-- FOOD PRODUCTS DATABASE 
+<script src="data/items-meat.js"></script>
+<script src="data/items-produce.js"></script>
+
+<script>
+    let itemReciept = []; 
+    let storeRecieptRecords = [];
+</script>
+-->
+<!-- CODE NEEDED TO CREATE RECIEPT NUMBERS USING CURRENT DATE AND TIME -->
+<script src="scripts/create-date.js"></script>
+
+<!-- LOOK UP ITEM CODE -->
+<script src="scripts/pointofsale-lookupitemcode.js"></script>
+
+<!-- PUSH ITEM TO RECIEPT -->
+<script src="scripts/pointofsale-pushtoitemreciept.js"></script>
+
+<!-- CALCULATE AMOUNT -->
+<script src="scripts/pointofsale-calculateamount.js"></script>
+
+<!-- REMOVE LIST ARRAY ELEMENT FOR ITEM VOIDING -->
+<script src="scripts/pointofsale-removelistarrayelement.js"></script>
+
+<!-- COMPLETE TRANSACTION-->
+<script src="scripts/pointofsale-completetransaction.js"></script>
+
+<script>
+    if (storeRecieptRecords.length >= 40)  {
+        document.title = 'Customer Records: ' + month + ' ' +  year + ' ' + day;
+        window.print();
+        storeRecieptRecords = [];
+    }
+</script>
+</html>

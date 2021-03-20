@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Submitted</title>
+    <link rel="stylesheet" type="text/css" href="css/store-system-main.css">
+    <link rel="stylesheet" type="text/css" href="css/webstore.css">
+</head>
+<body>
+    <header>
+        <div id="header-left">
+            <h2 id="store-name"></h2>
+        </div>
+        <% let newCategoryArray = []; %>
+        <% let newDepartmentArray = []; %>
+    
+        <div id="header-right">
+            <div id="top-of-header-right">
+                <span id="welcome-guest">Welcome, Guest!</span>
+                <span id="shopping-cart">order pickup: 
+                    <% if (customerOrderAtWebStore.length == 0)  { %>
+                    start a new cart by clicking on any item </span>
+                    <% } else  { %>
+                        <%= customerOrderAtWebStore.length %> items in cart</span> | <span id="view-your-cart"><a href="webstore-cart">view your cart</a></span>
+                    <% } %>
+            </div>
+            
+    
+        </div>
+        
+        
+    </header>
+    
+        <div id="below-header">
+            <div id="below-header-left">
+                <h4 id="search-number-of-items">Search our selection!</h4>
+            </div>
+            <div id="below-header-center-left">
+                
+                <!-- SEARCH BAR PARTIAL BEGIN -->
+                <%- include('./partials-search-items.ejs') %>
+                <!-- SEARCH BAR PARTIAL END -->
+            </div>
+            <div id="below-header-center-right">
+                <!-- DROPDOWN MENU PARTIAL BEGIN -->
+                <%- include('./partials-dropdown-select.ejs') %>
+                <!-- DROPDOWN MENU PARTIAL END -->
+            </div>
+            <div id="below-header-right">
+                open | close 8:00PM
+            </div>
+            <div id="category-dropdown"></div>
+            
+             </div>
+
+    <div id="order-confirmation-message">
+        <h3>We thank you for choosing to place your order with us today!</h3>
+
+        <h3>Your confimation number for this web order is: <%= result[0]._id %></h3>
+    </div>
+
+    
+</body>
+</html>
+
+<script src="data/site-data-config.js"></script>

@@ -1,0 +1,21 @@
+.online-order:nth-child(odd)  {
+    background-color: blanchedalmond;
+}
+.online-order  {
+    display: block
+}
+.online-order:first-child  {
+    display: block;
+}
+.online-order-checklist-line  {
+    display: flex;
+    text-transform: capitalize;
+}
+
+.online-order-checklist-line input  {
+    width: 3%;
+}
+.online-order-checklist-line h5  {
+    width: 97%;
+    margin-top: 2px;
+}

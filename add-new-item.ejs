@@ -1,0 +1,71 @@
+    <title>Add New Item to Database</title>
+
+    <h1>Add A New Item to Database</h1>
+
+    <div id="form-container">
+        <form action="/add-new-item-plu" method="POST", enctype='application/x-www-form-urlencoded'></form>
+            <div id="form-itemCode">
+                <label for="itemCode">Item PLU Code:</label>
+                <input type="text" name="itemCode" id="itemCode" placeholder="search for a code">
+            </div>
+            <div id="form-itemDepartment">
+                <label for="Produce">Department: Produce</label>
+                <input type="radio" name="itemDepartment" value="Produce"><br>
+                <label for="Bulk">Bulk</label>
+                <input type="radio" name="itemDepartment" value="Bulk"><br>
+                <label for="Meat">Meat</label>
+                <input type="radio" name="itemDepartment" value="Meat">
+            </div>
+            <div id="form-itemCategory">
+                <label for="itemCode">Category:</label>
+                <input type="text" name="itemCategory">
+            </div>
+            <div id="form-itemBrand">
+                <label for="itemBrand">Brand:</label>
+                <input type="text" name="itemBrand">
+            </div>
+            <div id="form-itemType">
+                <label for="itemType">Type:</label>
+                <input type="text" name="itemType">
+            </div>
+            <div id="form-itemDescription">
+                <label for="itemDescription">Item Description:</label>
+                <input type="text" name="itemDescription">
+            </div>
+            <div id="form-itemPerBox">
+                <label for="itemPerBox">Items Per Box:</label>
+                <input type="number" name="itemPerBox">
+            </div>
+            <div id="form-itemPrice">
+                <label for="itemPrice">Item Retail Price:</label>
+                <input type="number" name="itemPrice">
+            </div>
+            <div id="form-itemPromo">
+                <label for="itemPromo">Item Promo Price:</label>
+                <input type="text" name="itemPromo">
+            </div>
+            <div id="form-promo">
+                <label for="true">On Sale</label>
+                <input type="radio" name="promo" value="true">
+                <label for="false">Off Sale</label>
+                <input type="radio" name="promo" value="false">
+            </div>
+            <div id="form-hst">
+                <label for="true">HST Applied? Yes</label>
+                <input type="radio" name="hst" value="true">
+                <label for="false">No</label>
+                <input type="radio" name="hst" value="false">
+            </div>
+            <div id="form-weighedItem">
+                <label for="true">Sold By Weight?</label>
+                <input type="radio" name="weighedItem" value="true">
+                <label for="false">Sold By Volume?</label>
+                <input type="radio" name="weighedItem" value="false">
+            </div>
+            <div id="form-itemImage">
+                <label for="itemImage">Item Image Path: "images/produce/</label>
+                <input type="text" name="itemImage">
+            </div>
+            <input type="submit" value="Submit">
+        </form>
+    </div>

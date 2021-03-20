@@ -1,0 +1,155 @@
+
+<title>nessumsar Retail Package - Web Store</title>
+<link rel="stylesheet" type="text/css" href="public/css/store-system-main.css">
+<link rel="stylesheet" type="text/css" href="public/css/webstore.css">
+
+
+<header>
+    <div id="header-left">
+        <h2 id="store-name"></h2>
+    </div>
+
+    <div id="header-center">
+        <h4 id="search-number-of-items">Search from <%= data.length %> items!</h4>
+        <form action="/webstore-search" method="POST">
+            <input type="text" name="itemCode" id="itemCode" placeholder="enter a PLU or UPC code here">
+            <input type="submit" value="search">
+        </form>
+    </div>
+    <div id="header-right">
+        <form action="/webstore-search" method="POST">
+        <h4 id="shop-by-department"><label for="categories">Choose a product category:</label></h4>
+        <select name="itemCategory" id="itemCategory">
+            <option value="null">Select A Category</option>
+            <option value="apples">Apples</option>
+            <option value="citrus">Citrus</option>
+            <option value="melons">Melons</option>
+        </select>
+        <input type="submit" value="Submit">
+        </form>
+    </div>
+</header>
+
+    <div id="below-header"><div id="category-dropdown"></div><span id="shopping-cart"></span> | <span id="view-your-cart">view your cart</span> | <span id="proceed-to-checkout">proceed to checkout</span></div>
+
+    <div id="shopping-cart-window"></div>
+
+    
+    <main id="products">
+        <div id="food-products" class="food-items">
+          
+            <% let newCategoryArray = []; %>
+
+            <% for (let i = 0; i < data.length; i++)  { %>
+                <%     newCategoryArray.push(data[i].itemCategory); %>
+                <% } %>
+        
+                <% let uniqueCategoryList = [...new Set(newCategoryArray)] %>
+                <% uniqueCategoryList.sort(); %>
+                <% console.log(uniqueCategoryList) %>
+                <% Object.keys(uniqueCategoryList).forEach(function(item) { %>
+                <div id="<%= uniqueCategoryList[item] %>" class="food-category-section">
+                    <h2><%= uniqueCategoryList[item] %></h2>
+                    <a name="<%= uniqueCategoryList[item] %>"></a>
+
+                    <% for(var i = 0; i < data.length; i++) { %>
+                        <% if (data[i].itemCategory == (uniqueCategoryList[item]))  { %>
+                            <div id="food-item-<%= data[i].itemCode %>" class="food-item-section">
+                                <img src=<%= data[i].itemImage %> width="200">
+                                <h3> <%= data[i].itemDescription %></h3>
+                                    <div id="price-amount-<%= data[i].itemCode %>" class="price-and-amount">
+                                        <h4><%= data[i].itemPrice %></h4>
+                                        <label for="quantity-<%= data[i].itemCode %>">Quantity: </label>
+                                        <input id="quantity-<%= data[i].itemCode %>" type="number" min="0">
+                                    </div>
+                                <button>add to order</button>
+                            </div>
+                        <% } %>
+                    <% } %>
+                    <div class="jump-to-category">
+                        
+                            <h4 id="shop-by-department"><label for="categories">Jump to product category:</label></h4>
+                            <select name="itemCategory" id="itemCategory">
+                                <option value="null">Select A Category</option>
+                                <% for(var i = 0; i < uniqueCategoryList.length; i++) { %>
+                                    <option value="<%= uniqueCategoryList[i]%>" href="#<%= uniqueCategoryList[i]%>"><%= uniqueCategoryList[i]%></option>
+                                <% } %>
+                            </select>
+                            <input type="submit" value="GO">
+                        
+                    </div>
+                </div>  
+                <% }) %>
+        </div>
+    </main>
+
+    <div id="item-code-test">
+        <h3 id="item-name"></h3>
+    </div>
+
+<!-- FOOD PRODUCTS DATABASE
+<script src="data/items-meat.js"></script>
+<script src="data/items-produce.js"></script>
+
+CONCATENATE FOOD DATABASES 
+<script src="scripts/items-all.js"></script>-->
+
+
+
+
+<script>
+    let foodProducts = produce;
+    let shoppingCart = [];
+    document.getElementById('shopping-cart').innerText = 'Items in your cart: ' + shoppingCart.length;
+</script>
+<!--
+<script>
+    function globalProductSearch()  {
+    console.log('function globalProductSearch')
+
+    
+    let globalProductSearchInput = document.getElementById('item-search-bar').value;
+    let itemFound = allFoodProducts.find(e => (e.itemDescription == globalProductSearchInput) || (e.itemCategory == globalProductSearchInput)); 
+    
+    if (itemFound == undefined)  {
+        console.log ('item not found')
+    }  else  {
+        console.log (itemFound)
+        let searchResults = [];
+        for (let i = 0; i > allFoodProducts.length; i++)  {
+            if (itemFound == 'burgers')  {
+                searchResults.push(allFoodProducts[i]);
+            }
+        }
+        console.log(searchResults)
+    }
+}
+
+</script>
+-->
+
+
+<!-- STORE DATA CONFIG FILE-->
+<script src="data/site-data-config.js"></script>
+
+<!-- CREATE ITEM CARDS ON WEBPAGE-->
+<script src="scripts/webstore-create-item-cards.js"></script>
+
+<!-- BUILD DROPDOWN LISTS ON ITEM CARDS AND PAGE HEADER-->
+<script src="scripts/webstore-build-dropdown-lists.js"></script>
+
+<!-- ADD ITEMS TO CART -->
+<script src="scripts/webstore-add-to-cart.js"></script>
+
+<!-- VIEW CART CONTENTS -->
+<script src="scripts/webstore-view-cart-contents.js"></script>
+
+<!-- HIDE CART CONTENTS -->   
+<script src="scripts/webstore-hide-cart-contents.js"></script>
+
+<!-- EVENT LISTENERS -->  
+<script>
+    document.getElementById('view-your-cart').addEventListener('click', viewCartContents);
+
+    document.getElementById('search-site').addEventListener('click', globalProductSearch);
+</script>

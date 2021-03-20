@@ -1,0 +1,98 @@
+<link rel="stylesheet" type="text/css" href="css/store-system-main.css">
+<link rel="stylesheet" type="text/css" href="css/webstore.css">
+
+<header>
+  <div id="header-left">
+      <h2 id="store-name"></h2>
+      <h6>A website development project by Greg Rasmussen</h6>
+  </div>
+  <% let newCategoryArray = []; %>
+  <% let newDepartmentArray = []; %>
+
+  <div id="header-right">
+      <div id="top-of-header-right">
+          <span id="welcome-guest">Welcome, Guest!</span>
+          <span id="shopping-cart">order pickup: 
+              <% if (customerOrderAtWebStore.length == 0)  { %>
+              start a new cart by clicking on any item </span>
+              <% } else  { %>
+                  <%= customerOrderAtWebStore.length %> items in cart</span> | <span id="view-your-cart"><a href="webstore-cart">view your cart</a></span>
+              <% } %>
+      </div>
+      
+
+  </div>
+  
+  
+</header>
+
+  <div id="below-header">
+      <div id="below-header-left">
+          <h4 id="search-number-of-items">Search our selection!</h4>
+      </div>
+      <div id="below-header-center-left">
+          <!-- SEARCH BAR PARTIAL BEGIN -->
+          <%- include('./partials-search-items.ejs') %>
+          <!-- SEARCH BAR PARTIAL END -->
+      </div>
+      <div id="below-header-center-right">
+          <!-- DROPDOWN MENU PARTIAL BEGIN -->
+          <%- include('./partials-dropdown-select.ejs') %>
+          <!-- DROPDOWN MENU PARTIAL END -->
+      </div>
+      <div id="below-header-right">
+          open | close 8:00PM
+      </div>
+      <div id="category-dropdown"></div>
+      
+       </div>
+
+<h1>Results Page</h1>
+
+
+<% if(response.length > 1)  { %>
+  <h3><%= response.length %> results found for "<%= itemCategoryFormField %><%= itemCodeFormField %><%= itemDescriptionFormField %>". Yum Yum!</h3>
+  <% } else if (response.length == 1)  { %>
+    <h3><%= response.length %> result found for "<%= itemCategoryFormField %><%= itemCodeFormField %><%= itemDescriptionFormField %>". Yum!</h3>
+    <% } else { %>
+      <h3>Sorry, no items with that UPC or PLU code, or description, were found. Please try again.</h3>
+    <% } %>
+
+ 
+
+<main id="products">
+  <div id="food-products" class="food-products">
+    <div id="search-results" class="food-category-section">
+    <% for(var i = 0; i < response.length; i++) { %>
+    <!-- begin item card -->
+<form action="/webstore-add-to-cart" method="POST">
+  <div id="food-item-<%= data[i].itemCode %>" class="food-item-section">
+      <% if (data[i].itemImage == "images/produce/") { %>
+          <img src="images/produce/z-image-not-available.jpg" width="200">
+      <% } else { %>
+      <img src=<%= data[i].itemImage %> width="200">
+      <% } %>
+      <h3> <%= data[i].itemDescription %> <%= data[i].itemType %></h3>
+          <div id="price-amount-<%= data[i].itemCode %>" class="price-and-amount">
+              <div class="price-and-amount-form">
+                  <% if (data[i].weighedItem == true) { %>
+                      <h4><%= (data[i].itemPrice * 0.454).toFixed(2) %>/lb</h4>
+                          <% } else { %>
+                      <h4><%= data[i].itemPrice %>/ea</h4>
+                      <% } %>
+                      
+                          <label for="quantity">Quantity: </label>
+                          <input type="number" name="quantity" class="price-and-amount-quantity" min="0">
+                          <input type="text" value="<%= data[i].itemCode %>" name="itemPluCode" style="display: none;">
+              </div>
+                  <input type="submit" class="add-to-order-button" value="add to order">
+          </div>
+  </div>
+</form>
+<!-- end item card -->
+    <% } %>
+  </div>
+</main>
+
+<!-- STORE DATA CONFIG FILE-->
+<script src="data/site-data-config.js"></script>

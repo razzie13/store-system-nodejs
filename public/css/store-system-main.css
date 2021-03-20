@@ -1,0 +1,80 @@
+body  {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#container  {
+    background: url('../../public/images/site-ui/store-system-main-bg.jpg');
+    height: 100%;
+    width: 100%;
+    position: fixed;
+
+}
+
+#store-system-main-area  {
+    background-color: rgba(0, 0, 0, 0.725);
+    color: white;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    padding: 100px;
+    font-size: 18px;
+    width: 80%;
+    box-sizing: border-box;
+    border-style: none;
+    border-radius: 10px;
+}
+
+#store-system-main-area a {
+    color: white;
+    text-decoration: underline;
+}
+
+#store-system-main-area a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+#store-system-main-area a:visited {
+    color: white;
+    text-decoration: underline;
+}
+
+#store-system-main-area a:active {
+    color: white;
+    text-decoration: underline;
+}
+
+h1  {
+    letter-spacing: 1.2px;
+}
+
+p {
+    letter-spacing: 1.1px;
+}
+
+ul {
+    letter-spacing: 1.1px;
+    font-weight: bold;
+    margin-top: 24px;
+}
+
+li {
+    margin-bottom: 8px;
+    font-weight: normal;
+}
+
+li:first-child  {
+    margin-top: 8px;
+}
+
+@media screen and (max-width: 600px)  {
+    #store-system-main-area {
+        background-color: rgba(0, 0, 0, 0.725);
+        color: white;
+        padding: 30px;
+        font-size: 20px;
+    }
+}

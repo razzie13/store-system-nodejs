@@ -1,0 +1,187 @@
+
+<title>nessumsar Retail Package - Web Store</title>
+<link rel="stylesheet" type="text/css" href="css/store-system-main.css">
+<link rel="stylesheet" type="text/css" href="css/webstore.css">
+<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+
+
+<header>
+    <div id="header-left">
+        <h2 id="store-name"></h2>
+        <h6>A website development project by Greg Rasmussen</h6>
+    </div>
+    <% let newCategoryArray = []; %>
+    <% let newDepartmentArray = []; %>
+
+    <div id="header-right">
+        <div id="top-of-header-right">
+            <span id="welcome-guest">Welcome, Guest!</span>
+            <span id="shopping-cart">order pickup: 
+                <% if (customerOrderAtWebStore.length == 0)  { %>
+                start a new cart by clicking on any item </span>
+                <% } else  { %>
+                    <%= customerOrderAtWebStore.length %> items in cart</span> | <span id="view-your-cart"><a href="webstore-cart">view your cart</a></span>
+                <% } %>
+        </div>
+        
+
+    </div>
+    
+    
+</header>
+
+    <div id="below-header">
+        <div id="below-header-left">
+            <h4 id="search-number-of-items">Search our selection!</h4>
+        </div>
+        <div id="below-header-center-left">
+            <!-- SEARCH BAR PARTIAL BEGIN -->
+            <%- include('./partials-search-items.ejs') %>
+            <!-- SEARCH BAR PARTIAL END -->
+        </div>
+        <div id="below-header-center-right">
+            <!-- DROPDOWN MENU PARTIAL BEGIN -->
+            <%- include('./partials-dropdown-select.ejs') %>
+            <!-- DROPDOWN MENU PARTIAL END -->
+        </div>
+        <div id="below-header-right">
+            open | close 8:00PM
+        </div>
+        <div id="category-dropdown"></div>
+        
+         </div>
+
+    <div id="background-<%= jumpToDepartmentButton %>">
+        <div id="<%= jumpToDepartmentButton %>-dept" class="store-department-title"><%= jumpToDepartmentButton %></div>
+        <h2 id="store-tagline"></h2>
+    </div>
+
+    <% for (let i = 0; i < data.length; i++)  { %>
+        <%     newCategoryArray.push(data[i].itemCategory); %>
+        <%     newDepartmentArray.push(data[i].itemDepartment); %>
+        <% } %>
+
+        <% let uniqueCategoryList = [...new Set(newCategoryArray)] %>
+        <% uniqueCategoryList.sort(); %>
+
+        <% let uniqueDepartmentList = [...new Set(newDepartmentArray)] %>
+        <% uniqueDepartmentList.sort(); %>
+
+    <div id="department-categories">
+        <% for (let i = 0; i < uniqueCategoryList.length; i++)  { %>
+            <div id="department-categories-<%= uniqueCategoryList[i] %>"><%= uniqueCategoryList[i] %></div>
+        <% } %>
+    </div>
+
+    <main id="products">
+        
+        <div id="food-products" class="food-items">
+
+            
+
+                
+
+                <!-- OLD SHOW-EVERYTHING WAY TO DISPLAY SITE -->
+                <% Object.keys(uniqueCategoryList).forEach(function(item) { %>
+                <div id="<%= uniqueCategoryList[item] %>" class="food-category-section">
+                    <h2><%= uniqueCategoryList[item] %></h2>
+                    <a name="<%= uniqueCategoryList[item] %>"></a>
+
+                    
+                    <% for(var i = 0; i < data.length; i++) { %>
+                        <% if (data[i].itemCategory == (uniqueCategoryList[item]))  { %>
+                                                    <!-- begin item card -->
+                        <form action="/webstore-add-to-cart" method="POST">
+                            <div id="food-item-<%= data[i].itemCode %>" class="food-item-section">
+                                <% if (data[i].itemImage == "images/produce/") { %>
+                                    <img src="images/produce/z-image-not-available.jpg" width="200">
+                                <% } else { %>
+                                <img src=<%= data[i].itemImage %> width="200">
+                                <% } %>
+                                <h3> <%= data[i].itemDescription %> <%= data[i].itemType %></h3>
+                                    <div id="price-amount-<%= data[i].itemCode %>" class="price-and-amount">
+                                        <div class="price-and-amount-form">
+                                            <% if (data[i].weighedItem == true) { %>
+                                                <h4><%= (data[i].itemPrice * 0.454).toFixed(2) %>/lb</h4>
+                                                    <% } else { %>
+                                                <h4><%= data[i].itemPrice %>/ea</h4>
+                                                <% } %>
+                                                
+                                                    <label for="quantity">Quantity: </label>
+                                                    <input type="number" name="quantity" class="price-and-amount-quantity" min="0">
+                                                    <input type="text" value="<%= data[i].itemCode %>" name="itemPluCode" style="display: none;">
+                                        </div>
+                                            <input type="submit" class="add-to-order-button" value="add to order">
+                                    </div>
+                            </div>
+                        </form>
+                        <!-- end item card --> 
+                        <% } %>
+                    <% } %>
+                    
+                    <div class="jump-to-category">
+                        <div class="half-width">
+                            <h4 id="shop-by-category"><label for="categories">Jump to product category:</label></h4>
+                            <select name="itemCategory" id="itemCategory">
+                                <option value="null">Select A Category</option>
+                                <% for(var i = 0; i < uniqueCategoryList.length; i++) { %>
+                                    <option value="<%= uniqueCategoryList[i]%>" href="#<%= uniqueCategoryList[i]%>"><%= uniqueCategoryList[i]%></option>
+                                <% } %>
+                            </select>
+                            <input type="submit" value="GO">
+                        </div>
+                        <div class="half-width">
+                            <form action="webstore-search" method="POST">
+                                <h4 id="shop-by-department"><label for="departments">Jump to another Department:</label></h4>
+                                <select name="itemDepartment" id="itemDepartment">
+                                    <option value="null">Select A Department</option>
+                                    <% for(var i = 0; i < uniqueDepartmentList.length; i++) { %>
+                                        <option value="<%= uniqueDepartmentList[i]%>" href="#<%= uniqueDepartmentList[i]%>"><%= uniqueDepartmentList[i]%></option>
+                                    <% } %>
+                                </select>
+                                <select name="itemCategoryInline" id="itemCategoryInline">
+                                    <option value="null">Select A Category</option>
+                                    <% for(var i = 0; i < uniqueCategoryList.length; i++) { %>
+                                        <option value="<%= uniqueCategoryList[i]%>" href="#<%= uniqueCategoryList[i]%>"><%= uniqueCategoryList[i]%></option>
+                                    <% } %>
+                                </select>
+                                <input type="submit" value="GO">
+                            </form>
+                        </div>
+                    </div>
+                    
+                </div>  
+                <% }) %>
+                <!-- END OLD SHOW-EVERYTHING WAY TO DISPLAY SITE -->
+        </div>
+    </main>
+
+    <div id="item-code-test">
+        <h3 id="item-name"></h3>
+    </div>
+
+<script>
+    let foodProducts = produce;
+    let shoppingCart = [];
+    document.getElementById('shopping-cart').innerText = 'Items in your cart: ' + shoppingCart.length;
+</script>
+
+
+<!-- STORE DATA CONFIG FILE-->
+<script src="data/site-data-config.js"></script>
+
+<!-- ADD ITEMS TO CART -->
+<script src="scripts/webstore-add-to-cart.js"></script>
+
+<!-- VIEW CART CONTENTS -->
+<script src="scripts/webstore-view-cart-contents.js"></script>
+
+<!-- HIDE CART CONTENTS -->   
+<script src="scripts/webstore-hide-cart-contents.js"></script>
+
+<!-- EVENT LISTENERS -->  
+<script>
+    document.getElementById('view-your-cart').addEventListener('click', viewCartContents);
+
+    document.getElementById('search-site').addEventListener('click', globalProductSearch);
+</script>

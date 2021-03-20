@@ -1,0 +1,33 @@
+{
+  "name": "store-system",
+  "version": "1.0.0",
+  "engines": {
+    "node": "10.15.1"
+  },
+  "description": "retail store data system",
+  "main": "server.js",
+  "dependencies": {
+    "alert": "^5.0.5",
+    "body-parser": "^1.19.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "js-alert": "^1.0.4",
+    "mongoose": "^5.10.0",
+    "nodemon": "^2.0.4",
+    "path": "^0.12.7",
+    "popups": "^1.1.3",
+    "prompt": "^1.0.0",
+    "pug": "^3.0.0",
+    "validator": "^13.1.1"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  },
+  "scripts": {
+    "devStart": "nodemon server",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "Greg Rasmussen",
+  "license": "ISC"
+}

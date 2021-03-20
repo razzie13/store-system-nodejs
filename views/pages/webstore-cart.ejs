@@ -1,0 +1,141 @@
+<link rel="stylesheet" type="text/css" href="css/store-system-main.css">
+<link rel="stylesheet" type="text/css" href="css/webstore.css">
+
+<header>
+    <div id="header-left">
+        <h2 id="store-name"></h2>
+        <h6>A website development project by Greg Rasmussen</h6>
+    </div>
+    <% let newCategoryArray = []; %>
+    <% let newDepartmentArray = []; %>
+
+    <div id="header-right">
+        <div id="top-of-header-right">
+            <span id="welcome-guest">Welcome, Guest!</span>
+            <span id="shopping-cart">order pickup: 
+                <% if (customerOrderAtWebStore.length == 0)  { %>
+                start a new cart by clicking on any item </span>
+                <% } else  { %>
+                    <%= customerOrderAtWebStore.length %> items in cart</span> | <span id="view-your-cart"><a href="webstore-cart">view your cart</a></span>
+                <% } %>
+        </div>
+        
+
+    </div>
+    
+    
+</header>
+
+    <div id="below-header">
+        <div id="below-header-left">
+            <h4 id="search-number-of-items">Search our selection!</h4>
+        </div>
+        <div id="below-header-center-left">
+            <!-- SEARCH BAR PARTIAL BEGIN -->
+            <%- include('./partials-search-items.ejs') %>
+            <!-- SEARCH BAR PARTIAL END -->
+        </div>
+        <div id="below-header-center-right">
+            <!-- DROPDOWN MENU PARTIAL BEGIN -->
+            <%- include('./partials-dropdown-select.ejs') %>
+            <!-- DROPDOWN MENU PARTIAL END -->
+        </div>
+        <div id="below-header-right">
+            open | close 8:00PM
+        </div>
+        <div id="category-dropdown"></div>
+        
+         </div>
+
+<h1>Order Submission</h1>
+
+<div class="view-shopping-cart-header">
+    <div class="view-shopping-cart-item-name"></div>
+    <div class="view-shopping-cart-item-price"></div>
+</div>
+    <% for(var i = 0; i < customerOrderAtWebStore.length; i++) { %>
+        <div class="view-shopping-cart">
+            <div class="view-shopping-cart-item-name">
+                <% if (customerOrderAtWebStore[i].weighedItem == true)  {  %>
+                <h3><%= customerOrderAtWebStore[i].itemBrand %> <%= customerOrderAtWebStore[i].itemDescription %> <%= customerOrderAtWebStore[i].itemType %> 1 Lb</h3>
+                <% } else  {  %>
+                    <h3><%= customerOrderAtWebStore[i].itemBrand %> <%= customerOrderAtWebStore[i].itemDescription %> <%= customerOrderAtWebStore[i].itemType %></h3>
+                <% }  %>
+            </div>
+            <div class="view-shopping-cart-item-price">
+                <h3><%= customerOrderAtWebStore[i].itemPrice.toFixed(2) %></h3>
+            </div>
+        </div>
+    <% } %>
+
+    <div id="oops-forgot-an-item">
+        <h3>Forget Anything? It's not too late to get that last-minute item!</h3>
+        <!-- DROPDOWN MENU PARTIAL BEGIN -->
+        <%- include('./partials-dropdown-select.ejs') %>
+        <!-- DROPDOWN MENU PARTIAL END -->
+        <!-- SEARCH BAR PARTIAL BEGIN -->
+        <%- include('./partials-search-items.ejs') %>
+        <!-- SEARCH BAR PARTIAL END -->
+    </div>
+
+    <div class="view-shopping-cart space-above-subtotal">
+        <div class="view-shopping-cart-item-name"><h3>Subtotal:</h3></div>
+        <div class="view-shopping-cart-item-price"><h3>
+            <% if (customerOrderAtWebStore.length > 0)  { %>
+                <%= webStoreRecieptSubTotalToString %>
+            <% } else  { %>
+                0.00
+            <% } %>
+        </h3></div>
+    </div>
+    <div class="view-shopping-cart">
+        <div class="view-shopping-cart-item-name"><h3>Taxes:</h3></div>
+        <div class="view-shopping-cart-item-price"><h3>
+            <% if (customerOrderAtWebStore.length > 0)  { %>
+                <%= webStoreRecieptTaxesToString %>
+            <% } else  { %>
+                0.00
+            <% } %>
+        </h3></div>
+    </div>
+    <div class="view-shopping-cart space-below-total">
+        <div class="view-shopping-cart-item-name"><h3>Total:</h3></div>
+        <div class="view-shopping-cart-item-price"><h3>
+            <% if (customerOrderAtWebStore.length > 0)  { %>
+                <%= webStoreRecieptTotalToString %>
+            <% } else  { %>
+                0.00
+            <% } %>
+        </h3></div>
+    </div>
+    
+
+
+
+<form action="/send-web-order-to-database" method="POST">
+<div class="send-web-order-contact-info">
+    <h2>Before you send us your order, we will need to know a little bit about you so we can pick and prepare your order for pickup!</h2>
+    <div class="send-web-order-section">
+        <div class="send-web-order-contact-left"><label for="customerName">Name</label></div>
+        <div class="send-web-order-contact-right"><input type="text" name="customerName" placeholder="Your First and Last Name"></div>
+    </div>
+    <div class="send-web-order-section">
+        <div class="send-web-order-contact-left"><label for="customerPhone">Phone #</label></div>
+        <div class="send-web-order-contact-right"><input type="text" name="customerPhone" placeholder="Your Phone Number"></div>
+    </div>
+    <div class="send-web-order-section">
+        <div class="send-web-order-contact-left"><label for="customerEmail">Email Address</label></div>
+        <div class="send-web-order-contact-right"><input type="text" name="customerEmail" placeholder="Your Email Address"></div>
+    </div>
+    <div class="send-web-order-section">
+        <input type="checkbox" name="customerEmailPermission" id="">
+        <label for="customerEmail-Permission">Send weekly specials right to my inbox! Don't worry - we won't share with anyone.</label>
+    </div>
+    <div class="send-web-order-section">
+        <input type="textarea" name="customerInstructions" placeholder="Please enter any specific instructions with regards to your order.">
+    </div>
+    <input type="submit" class="submit-web-order-form" value="submit your order for processing">
+</div>
+</form>
+  
+<script src="data/site-data-config.js"></script>

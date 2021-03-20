@@ -1,0 +1,139 @@
+@media screen  {
+            
+    #signs-to-print  {
+        display: none;
+    }
+
+    #signs-generated  {
+        background-color: grey;
+        display: flex;
+        flex-wrap: wrap;
+        padding-left: 20px;
+        padding-top: 20px;
+    }
+
+    #signs-generated-title  {
+        width: 100%;
+    }
+
+    .signs-generated-preview  {
+        background-color: greenyellow;
+        margin-right: 20px;
+        width: 150px;
+        min-width: 150px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    #top-data-section  {
+        display: flex;
+    }
+
+    .top-data-half  {
+
+        padding-left: 30px;
+    }
+
+    #sign-maker-search-results  {
+        background-color: lightpink;
+        width: 30%;
+    }
+
+    #sign-maker-search-form  {
+        background-color: lightgrey;
+        width: 70%;
+    }
+
+}
+
+@media print and (orientation: landscape) {
+    #sign-inputs, #sign-inputted, #print-signs, #top-data-section, #signs-generated, #signs-generated-title, #nessumsar-title  {
+        display: none;
+    }
+
+    #signs-to-print  {
+        display: block;
+        /*position: relative;*/
+        max-height: 737.3px;
+        max-width: 942px;
+    
+    }
+
+    #signs-to-print h3  {
+        font-size: 36pt;
+        position: relative;
+        margin-top: 60px;
+        margin-left: 40px;
+        float: left;
+        text-transform: capitalize;
+    }
+
+    #signs-to-print h1  {
+        font-size: 260pt;
+        position: relative;
+        float: right;
+        margin-top: 0px;
+        margin-bottom: 10px;
+        margin-left: 14px;
+        text-align: center;
+        
+    }
+
+    .sign  {
+        border-style: solid;
+        border-width: 10px;
+        border-color: white;
+        position: relative;
+        height: 737.3px;
+        width: 942px;
+        
+        box-sizing: border-box;
+
+
+    }
+
+    h1 span  {
+        font-size: 36pt;
+    }
+
+    h3 span  {
+        font-size: 16px;
+    }
+
+    h4 span  {
+        visibility: hidden;
+    }
+    #h4-ea, #h4-lb  {
+        font-size: 28pt;
+        position: relative;
+        margin-left: 812px;
+        margin-top: 530px;
+    }
+
+    h5  {
+        font-size: 20pt;
+        position: relative;
+        padding-top: 70px;
+    }
+
+    #signs-inputted li  {
+        text-transform: capitalize;
+    }
+
+}
+
+#clear-generated-signs {
+    float: right;
+    margin-right: 200px;
+}
+
+.sign-system-submit-button  {
+    background-color: green;
+    color: white;
+    border-style: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-weight: bold;
+    letter-spacing: 1.7px;
+    font-size: 18px;
+}
