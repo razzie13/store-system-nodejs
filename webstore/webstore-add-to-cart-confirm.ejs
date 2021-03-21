@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="public/css/store-system-main.css">
+<link rel="stylesheet" type="text/css" href="public/css/webstore.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+</head>
+<% let newCategoryArray = []; %>
+<% let newDepartmentArray = []; %> 
+<body>
+<!-- HEADER PARTIAL START -->
+
+<%- include('../views/partials/partials-header.ejs') %>
+
+<!-- HEADER PARTIAL END -->
+
+    <div id="item-added-to-cart">
+        <div id="item-added-to-cart-left">
+            <!-- begin item card -->
+            <form action="/store-system/webstore-add-to-cart" method="POST">
+                <div id="food-item-<%= data[0].itemCode %>" class="food-item-section-add-to-cart ">
+                    <% if (data[0].itemImage == "images/produce/") { %>
+                        <img src="images/produce/z-image-not-available.jpg" width="200">
+                    <% } else { %>
+                    <img src=<%= data[0].itemImage %> width="200">
+                    <% } %>
+                    <h3> <%= data[0].itemDescription %> <%= data[0].itemType %></h3>
+                </div>
+            </form>
+            <!-- end item card --> 
+        </div>
+        <div id="item-added-to-cart-right">
+            <h1><i class="fas fa-check 4x"></i>Item has been added to your cart:</h1>
+            <h3 id="add-to-cart-confirm-product-name"><%= data[0].itemDescription %> <%= data[0].itemType %></h3>
+            <h4>You have added <%= quantityFormField %> of this item.</h4>
+
+            <h2>Next Steps:</h2>
+            <div>
+                <h3>Select a Department from our DropDown Menu</h3>   
+                <!-- DROPDOWN MENU PARTIAL BEGIN -->
+                <%- include('../views/partials/partials-dropdown-select.ejs') %>
+                <!-- DROPDOWN MENU PARTIAL END -->
+            </div>
+            <div>
+                <h3>Or, search for an item based on UPC Code, PLU Code, or Item Name.</h3>
+                <!-- SEARCH BAR PARTIAL BEGIN -->
+                <%- include('../views/partials/partials-search-items.ejs') %>
+                <!-- SEARCH BAR PARTIAL END -->
+            </div>
+            <h3>Or, go back to the <a href="/store-system/webstore">webstore</a> main page.</h3>
+            <h3>Or, check your <a href="/store-system/webstore-cart">shopping cart</a> to review your items and submit your order.</h3>
+        </div>
+        
+    </div>
+
+</body>
+</html>
+
+<script src="data/site-data-config.js"></script>

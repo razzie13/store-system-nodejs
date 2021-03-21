@@ -1,54 +1,20 @@
 <header>
-    <div id="header-left">
-        <h2 id="store-name"></h2>
-    </div>
-    <% let newCategoryArray = []; %>
-    <% let newDepartmentArray = []; %>
-
-    <div id="header-right">
-        <div id="top-of-header-right">
-            <span id="welcome-guest">Welcome, Guest!</span>
-            <span id="shopping-cart">order pickup: 
-                <% if (customerOrderAtWebStore.length == 0)  { %>
-                start a new cart by clicking on any item </span>
-                <% } else  { %>
-                    <%= customerOrderAtWebStore.length %> items in cart</span> | <span id="view-your-cart"><a href="webstore-cart">view your cart</a></span>
-                <% } %>
-        </div>
+    <div id="header-inside">
+        <h2 id="store-name"><a href="https://gregrasmussen.com/store-system/webstore">Town Market</a></h2>
+            <h4 id="store-slogan">Your Local Supermarket</h4>
+            
+            <span class="contact">contact</span>
+            <span class="aboutus">about us</span>
+            <span class="social-icons">
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-facebook-f"></i>
+            </span>
         
-
-    </div>
-    
-    
+        <span><a href="/store-system/webstore-cart">your cart: <%= customerOrderAtWebStore.length %> items</a></span>
+    </div> 
 </header>
 
-    <div id="below-header">
-        <div id="below-header-left">
-            <h4 id="search-number-of-items">Search from <%= data.length %> items!</h4>
-        </div>
-        <div id="below-header-center-left">
-            
-            <form action="/webstore-search" method="POST">
-                <label for="itemCode"></label><input type="text" name="itemCode" id="itemCode" placeholder="enter a PLU or UPC code here"> <small>OR</small>
-                <label for="itemDescription"></label><input type="text" name="itemDescription" id="itemDescription" placeholder="enter the item name here">
-                <input type="submit" value="search">
-            </form>
-        </div>
-        <div id="below-header-center-right">
-            <form action="/webstore-departments" method="POST">
-                <label for="categories"></label>
-                <select name="itemDepartment" id="itemDepartment">
-                    <option value="null">Choose a Product Category</option>
-                    <option value="Produce">Produce</option>
-                    <option value="Meat">Meat</option>
-                    <option value="Bulk">Bulk</option>
-                </select>
-                <input type="submit" value="Submit">
-                </form>
-        </div>
-        <div id="below-header-right">
-            open | close 8:00PM
-        </div>
-        <div id="category-dropdown"></div>
-        
-         </div>
+<div id="below-header">
+    Town Market is a fake <span class="hide-on-mobile">demonstration</span> store that sells nothing<span class="hide-on-mobile"> except the website development skills of very real web developer Greg Rasmussen, who built this site from scratch using NodeJS, Express, and MongoDB</span>.
+</div>

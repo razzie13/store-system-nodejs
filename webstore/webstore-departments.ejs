@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>nessumsar Retail Package - Web Store</title>
+<link rel="stylesheet" type="text/css" href="public/css/store-system-main.css">
+<link rel="stylesheet" type="text/css" href="public/css/webstore.css">
+<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+</head>
+<% let newCategoryArray = []; %>
+<% let newDepartmentArray = []; %> 
+
+<body>
+
+<!-- HEADER PARTIAL START -->
+
+<%- include('../views/partials/partials-header.ejs') %>
+
+<!-- HEADER PARTIAL END -->
+
+    <div id="background-<%= jumpToDepartmentButton %>">
+        <div id="<%= jumpToDepartmentButton %>-dept" class="store-department-title"><%= jumpToDepartmentButton %></div>
+        <h2 id="store-tagline"></h2>
+    </div>
+
+    <% for (let i = 0; i < data.length; i++)  { %>
+        <%     newCategoryArray.push(data[i].itemCategory); %>
+        <%     newDepartmentArray.push(data[i].itemDepartment); %>
+        <% } %>
+
+        <% let uniqueCategoryList = [...new Set(newCategoryArray)] %>
+        <% uniqueCategoryList.sort(); %>
+
+        <% let uniqueDepartmentList = [...new Set(newDepartmentArray)] %>
+        <% uniqueDepartmentList.sort(); %>
+
+    <!-- QUICK JUMP TO OTHER DEPARTMENTS -->
+
+    <div id="department-categories">
+        <% for (let i = 0; i < uniqueCategoryList.length; i++)  { %>
+            <div id="department-categories-<%= uniqueCategoryList[i] %>"><a href="#<%= uniqueCategoryList[i] %>"><%= uniqueCategoryList[i] %></a></div>
+        <% } %>
+    </div>
+
+    <!-- END QUICK JUMP TO OTHER DEPARTMENTS -->
+
+    <!-- INCLUDE SEARCH BAR -->
+    <%- include('../views/partials/partials-search-store-items.ejs') %>
+
+    <main id="products">
+        
+        <div id="food-products" class="food-items">
+
+            
+
+                
+
+                <!-- OLD SHOW-EVERYTHING WAY TO DISPLAY SITE -->
+                <% Object.keys(uniqueCategoryList).forEach(function(item) { %>
+                <div id="<%= uniqueCategoryList[item] %>" class="food-category-section">
+                    <h2><%= uniqueCategoryList[item] %></h2>
+                    <a name="<%= uniqueCategoryList[item] %>"></a>
+
+                    
+                    <% for(var i = 0; i < data.length; i++) { %>
+                        <% if (data[i].itemCategory == (uniqueCategoryList[item]))  { %>
+                                                    <!-- begin item card -->
+                        <form action="/store-system/webstore-add-to-cart" method="POST">
+                            <div id="food-item-<%= data[i].itemCode %>" class="food-item-section">
+                                <% if (data[i].itemImage == "images/produce/") { %>
+                                    <img src="images/produce/z-image-not-available.jpg" width="200">
+                                <% } else { %>
+                                <img src=<%= data[i].itemImage %> width="200">
+                                <% } %>
+                                <h3> <%= data[i].itemDescription %> <%= data[i].itemType %></h3>
+                                    <div id="price-amount-<%= data[i].itemCode %>" class="price-and-amount">
+                                        <div class="price-and-amount-form">
+                                            <% if (data[i].weighedItem == true) { %>
+                                                <h4><%= (data[i].itemPrice * 0.454).toFixed(2) %>/lb</h4>
+                                                    <% } else { %>
+                                                <h4><%= data[i].itemPrice %>/ea</h4>
+                                                <% } %>
+                                                
+                                                    <label for="quantity">Quantity: </label>
+                                                    <input type="number" name="quantity" class="price-and-amount-quantity" min="0">
+                                                    <input type="text" value="<%= data[i].itemCode %>" name="itemPluCode" style="display: none;">
+                                        </div>
+                                            <input type="submit" class="add-to-order-button" value="add to order">
+                                    </div>
+                            </div>
+                        </form>
+                        <!-- end item card --> 
+                        <% } %>
+                    <% } %>
+                    
+                    <div class="jump-to-category">
+                        <div class="half-width">
+                            <h4 id="shop-by-category"><label for="categories">Jump to product category:</label></h4>
+                            <select name="itemCategory" id="itemCategory">
+                                <option value="null">Select A Category</option>
+                                <% for(var i = 0; i < uniqueCategoryList.length; i++) { %>
+                                    <option value="<%= uniqueCategoryList[i]%>" href="#<%= uniqueCategoryList[i]%>"><%= uniqueCategoryList[i]%></option>
+                                <% } %>
+                            </select>
+                            <input type="submit" value="GO">
+                        </div>
+                        <div class="half-width">
+                            <h4>JUMP TO ANOTHER DEPARTMENT</h4>
+                            <!-- DROPDOWN MENU PARTIAL BEGIN -->
+                            <%- include('../views/partials/partials-dropdown-select.ejs') %>
+                            <!-- DROPDOWN MENU PARTIAL END -->
+                        </div>
+                    </div>
+                    
+                </div>  
+                <% }) %>
+                <!-- END OLD SHOW-EVERYTHING WAY TO DISPLAY SITE -->
+        </div>
+    </main>
+
+    <div id="item-code-test">
+        <h3 id="item-name"></h3>
+    </div>
+
+    <!-- FOOTER PARTIAL START -->
+
+    <%- include('../views/partials/partials-footer.ejs') %>
+
+    <!-- FOOTER PARTIAL END -->
+
+</body>
+</html>
+
+

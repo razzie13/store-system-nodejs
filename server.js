@@ -9,13 +9,14 @@ const ejs = require("ejs");
 const dotenv = require('dotenv');
 dotenv.config();
 
-const plu_data_schema = require("./schema-plu-data");
-const pluItem = require("./schema-plu-data");
-const customerOrders = require("./schema-orders");
+const plu_data_schema = require("./connections/schemas/schema-plu-data");
+const pluItem = require("./connections/schemas/schema-plu-data");
+const customerOrders = require("./connections/schemas/schema-orders");
+
 
 // --------------------------------------------------------------------------------------------------------------------
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static('/public'));
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -42,9 +43,21 @@ const connection_customer_orders = mongoose.createConnection(uri_customer_orders
 //const connection_sales_data = mongoose.createConnection(uri_sales_data, { useUnifiedTopology: true, useNewUrlParser: true });
 
 
-const plu_data = connection_plu_data.model('store_plu_data', require('./schema-plu-data'), 'store_plu_data');
-const customer_orders = connection_customer_orders.model('checkout_and_online_orders', require('./schema-orders'), 'checkout_and_online_orders');
+const plu_data = connection_plu_data.model('store_plu_data', require('./connections/schemas/schema-plu-data'), 'store_plu_data');
+const customer_orders = connection_customer_orders.model('checkout_and_online_orders', require('./connections/schemas/schema-orders'), 'checkout_and_online_orders');
 //const sales_data = connection_sales_data.model('daily_sales_data', require('./schema-sales-data'), 'daily_sales_data');
+
+
+// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
+// ---------------   INTRO PAGE   -------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
+
+app.get('/', (req, res) => {
+    res.render(__dirname + '/index')
+})
+
 
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -68,7 +81,7 @@ app.get("/store-system/webstore",function(req,res){
         } else {
             response = data;
             console.log('success: webstore .get');
-            res.render(__dirname + '/webstore', { data, customerOrderAtWebStore });
+            res.render(__dirname + '/webstore/webstore', { data, customerOrderAtWebStore });
         }
     });
     })
@@ -82,7 +95,7 @@ app.get("/store-system/webstore",function(req,res){
 
     let webStoreRecieptTotal = customerOrderAtWebStore.reduce(function(prev, cur) {return prev + (cur.itemPrice + cur.itemTaxes);}, 0);
     webStoreRecieptTotalToString = webStoreRecieptTotal.toFixed(2)
-    res.render(__dirname + '/webstore-cart', { customerOrderAtWebStore, webStoreRecieptSubTotalToString, webStoreRecieptTaxesToString, webStoreRecieptTotalToString });
+    res.render(__dirname + '/webstore/webstore-cart', { customerOrderAtWebStore, webStoreRecieptSubTotalToString, webStoreRecieptTaxesToString, webStoreRecieptTotalToString });
     console.log('subtotal, taxes, total')
     console.log(webStoreRecieptSubTotalToString, webStoreRecieptTaxesToString, webStoreRecieptTotalToString)
 })
@@ -93,13 +106,12 @@ app.post("/store-system/webstore-departments",(function(req,res){
         var response = {};
         plu_data.find({ itemDepartment: jumpToDepartmentButton },function(err,data){
         if(err) {
-            //response = {"error" : true,"message" : "Error fetching data"};
             response = "Sorry, Nothing Matches your Search."
         } else {
             response = data;
 
         }
-        res.render(__dirname + '/webstore-departments', { data, jumpToDepartmentButton, customerOrderAtWebStore });
+        res.render(__dirname + '/webstore/webstore-departments.ejs', { data, jumpToDepartmentButton, customerOrderAtWebStore });
         console.log("Success : webstore-departments .post");
         
     });
@@ -115,13 +127,12 @@ app.post("/store-system/webstore-search",(function(req,res){
         var response = {};
         plu_data.find({$or: [{ itemDepartment: jumpToDepartmentButton }, { itemCode: itemCodeFormField }, { itemCategory: itemCategoryFormField }, { itemDescription: itemDescriptionFormField }, { itemDescription: itemDescriptionFormField }]},function(err,data){
         if(err) {
-            //response = {"error" : true,"message" : "Error fetching data"};
             response = "Sorry, Nothing Matches your Search."
         } else {
             response = data;
 
         }
-        res.render(__dirname + '/store-data-search.ejs', { data, response, itemCodeFormField, itemCategoryFormField, itemDescriptionFormField, customerOrderAtWebStore });
+        res.render(__dirname + '/webstore/store-data-search.ejs', { data, response, itemCodeFormField, itemCategoryFormField, itemDescriptionFormField, customerOrderAtWebStore });
         console.log("Success : webstore-search .post");
         
     });
@@ -136,7 +147,6 @@ app.post("/store-system/webstore-add-to-cart",(function(req,res){
     var response = {};
     plu_data.find({ itemCode: itemCodeFormField },function(err,data){
         if(err) {
-            //response = {"error" : true,"message" : "Error fetching data"};
             response = "Sorry, Nothing Matches your Search."
         } 
         else {
@@ -175,7 +185,7 @@ app.post("/store-system/webstore-add-to-cart",(function(req,res){
                 }
         }}
 
-        res.render(__dirname + '/webstore-add-to-cart-confirm.ejs', { data, itemCodeFormField, quantityFormField, customerOrderAtWebStore/*, recieptSubTotalToString, recieptTaxesToString, recieptTotalToString*/ });
+        res.render(__dirname + '/webstore/webstore-add-to-cart-confirm.ejs', { data, itemCodeFormField, quantityFormField, customerOrderAtWebStore/*, recieptSubTotalToString, recieptTaxesToString, recieptTotalToString*/ });
         console.log("Success : /webstore .post");        
         console.log("customerOrderAtWebStore");    
         console.log(customerOrderAtWebStore);    
@@ -219,7 +229,7 @@ app.post("/store-system/send-web-order-to-database",(function(req,res){
         if (err) {
             return res.send(err);
         } else {
-            res.render(__dirname + '/webstore-order-submit-confirm.ejs', { result, customerOrderAtWebStore })
+            res.render(__dirname + '/webstore/webstore-order-submit-confirm.ejs', { result, customerOrderAtWebStore })
         }});
 
 
@@ -290,7 +300,7 @@ app.get("/store-system/webstore-order-pick",function(req,res){
         response = data;
         console.log('success: web-orders-new .get');
         //res.send(data);
-        res.render(__dirname + '/web-orders-new', { data });
+        res.render(__dirname + '/webstore/web-orders-new', { data });
     }
 });
 })
@@ -301,7 +311,7 @@ app.post("/store-system/webstore-order-finalize", function(req, res) {
     customer_orders.findOneAndUpdate(documentId, { orderReady: true, orderPickerComments: orderPickerComments, useFindAndModify: false }, function(err, doc) {
         if (err) {res.send(500, {error: err})}
         else  {
-            res.render(__dirname + '/web-orders-complete-confirm.ejs');
+            res.render(__dirname + '/webstore/web-orders-complete-confirm.ejs');
         }
     });
 });

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="public/css/store-system-main.css">
+    <link rel="stylesheet" type="text/css" href="public/css/web-orders-new.css">
+    <title>New Web Orders</title>
+</head>
+<body>
+
+    <h1>Customer Web Orders</h1>
+    
+    <h4 id="online-order-count"></h4>
+
+    <div class="online-orders-at-a-glance">
+
+        <div class="online-order" id="order-<%= data._id %>">
+            <h3><%= data.custName %></h3>
+            <form action="tel:<%= data.custPhone %>"><button type="submit">Call Customer</button></form>
+            <h4>Special Instructions:</h4>
+            <p><%= data.customerInstructions %></p>
+            <h4>Items in Order: <%= data.customerOrders.length %></h4>
+            <% for(let i = 0; i < data.customerOrders.length; i++)  { %>
+                <div class="online-order-checklist-line">
+                    <input type="checkbox" name="list-item-" id="list-item-"><h5><%= data.customerOrders[i].itemBrand %> <%= data.customerOrders[i].itemDescription %> <%= data.customerOrders[i].itemType %></h5>
+                </div>
+            <% } %>
+            <h4>Order submitted at: <%= data.transactionDate %></h4>
+        </div>   
+
+        <form action="/store-system/webstore-order-finalize" method="POST">
+            <textarea name="orderPickerComments" placeholder="Type any notes regarding this order, such as product shortages or substitutions" cols="46" rows="10"></textarea><br><br>
+            <input type="text" value="<%= data._id %>" name="documentId" style="display: none;">
+            <input type="text" value="true" name="customer-order-ready" style="display: none;">
+            <input type="submit" name="submit-order-complete" value="Order Complete">
+        </form>   
+        
+    </div>
+
+</body>
+</html>
