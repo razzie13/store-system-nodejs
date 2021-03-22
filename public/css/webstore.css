@@ -48,7 +48,9 @@
   --width-sections: 1360px;
   --center: auto;
   /* UI PHOTOS */
-  --hero-autumn-bg: url('../../images/site-ui/autumn-hero-image-compressed.jpg');
+  --hero-autumn-bg: url('/public/images/site-ui/autumn-hero-image-compressed.jpg');
+  --hero-christmas-bg: url('/public/images/site-ui/christmas-hero-image-compressed.jpg');
+  --hero-spring-bg: url('/public/images/site-ui/spring-hero-image-compressed.jpg');
 }
 
 @media only screen and (max-width: 375px) {
@@ -67,10 +69,16 @@
   .hide-on-mobile, .meat, .produce, .grocery, .bulk, .aboutus, .contact, .social-icons, #store-slogan, .search-by-code {
     display: none;
   }
+  header {
+    font-size: 1rem;
+  }
   #store-name {
     font-size: 28px;
     line-height: 26px;
     margin-top: 15px;
+  }
+  #hero-text-and-item h2 {
+    margin-top: -72px;
   }
   .price-and-amount input[type=number] {
     width: 20px;
@@ -88,6 +96,10 @@
   }
   #hero-text-and-item h4 {
     margin-top: -50px;
+  }
+  .food-category-section {
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
   }
   .food-item-section h3 {
     font-size: var(--font-size-store-name);
@@ -148,6 +160,9 @@
     font-size: var(--font-size-small-category);
     text-transform: uppercase;
   }
+  #hero-text-and-item h2 {
+    margin-top: -9px;
+  }
   .search-by-code form {
     margin-top: -105px;
     margin-left: 250px;
@@ -168,6 +183,11 @@
   }
   #department-categories {
     width: var(--width-sections);
+  }
+  .food-category-section {
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
   }
 }
 
@@ -306,7 +326,6 @@ header {
   max-width: var(--width-max);
   background-color: var(--black);
   color: var(--white);
-  font-size: var(--font-size-item-name);
   font-weight: bold;
   line-height: 14px;
   margin-top: 0;
@@ -406,7 +425,7 @@ header a {
   /*
     background-image: url('../../public/images/site-ui/autumn-hero-image-compressed.jpg');
     */
-  background-image: url("../../public/images/site-ui/christmas-hero-image.jpg");
+  background-image: url("../../public/images/site-ui/spring-hero-image-compressed.jpg");
   height: var(--height-hero);
   width: 100vw;
   max-width: var(--width-sections);
@@ -434,7 +453,6 @@ header a {
 #hero-text-and-item h2 {
   line-height: 87px;
   font-weight: bold;
-  margin-top: -9px;
 }
 
 #hero-text-and-item h4 {
@@ -563,12 +581,11 @@ button#search-by-department, input[type=submit] {
   margin-left: 15px;
 }
 
-select.itemDepartment {
-  height: 32px;
-  padding-left: 8px;
+select#itemDepartment {
   border-style: none;
-  border-radius: 15px;
-  margin-left: 48px;
+  border-radius: 15px 0 0 15px;
+  height: 32px;
+  padding-right: 4px;
 }
 
 input#itemCode, input#itemDescription {
@@ -647,9 +664,6 @@ button:hover {
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
   max-width: var(--width-sections);
 }
 
@@ -941,6 +955,9 @@ button:hover {
 }
 
 @media screen and (min-width: 769px) {
+  header {
+    font-size: var(--font-size-item-name);
+  }
   #background-Produce {
     width: var(--width-sections);
   }
