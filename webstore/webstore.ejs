@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>nessumsar Retail Package - Web Store</title>
-    <link rel="stylesheet" type="text/css" href="public/css/store-system-main.css">
-    <link rel="stylesheet" type="text/css" href="public/css/webstore.css">
-    <link rel="stylesheet" type="text/css" href="css/store-system-main.css">
-    <link rel="stylesheet" type="text/css" href="css/webstore.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/store-system-main.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/webstore.css">
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
 </head>
@@ -29,7 +28,7 @@
                 <h4>Find Christmas Favourites at Town Market</h4>
             </div>
             <div id="hero-feature-picture">
-                <div id="hero-feature-picture-left"><img src="public/images/produce/squash-butternut.jpg" width="200px" height="200px"></div>
+                <div id="hero-feature-picture-left"><img src="/public/images/produce/squash-butternut.jpg" width="200px" height="200px"></div>
                 <div id="hero-feature-picture-right">
                     <h3>Butternut Squash</h3>
                     <h5>Locally Grown!</h5>
@@ -69,9 +68,9 @@
                             <form action="/store-system/webstore-add-to-cart" method="POST">
                                 <div id="food-item-<%= data[i].itemCode %>" class="food-item-section">
                                     <% if (data[i].itemImage == "images/meat/") { %>
-                                        <img src="images/produce/z-image-not-available.jpg">
+                                        <img src="/public/images/produce/z-image-not-available.jpg">
                                     <% } else { %>
-                                    <img src=<%= data[i].itemImage %> width="200">
+                                    <img src="/public/<%= data[i].itemImage %>" width="200">
                                     <% } %>
                                     <h3> <%= data[i].itemDescription %> <%= data[i].itemType %></h3>
                                         <div id="price-amount-<%= data[i].itemCode %>" class="price-and-amount">
@@ -81,10 +80,9 @@
                                                         <% } else { %>
                                                     <h4><%= data[i].itemPrice %>/ea</h4>
                                                     <% } %>
-                                                    
                                                         <label for="quantity">Quantity: </label>
                                                         <input type="number" name="quantity" class="price-and-amount-quantity" min="0">
-                                                        <input type="text" value="<%= data[i].itemCode %>" name="itemPluCode" style="display: none;">
+                                                        <input type="text" value="<%= data[i].itemCode %>" name="itemPluCode" style="display: none;">            
                                             </div>
                                                 <input type="submit" class="add-to-order-button" value="add to order">
                                         </div>
@@ -106,9 +104,9 @@
                             <form action="/store-system/webstore-add-to-cart" method="POST">
                                 <div id="food-item-<%= data[i].itemCode %>" class="food-item-section">
                                     <% if (data[i].itemImage == "images/produce/") { %>
-                                        <img src="images/produce/z-image-not-available.jpg">
+                                        <img src="/public/images/produce/z-image-not-available.jpg">
                                     <% } else { %>
-                                    <img src=<%= data[i].itemImage %> width="200">
+                                    <img src="/public/<%= data[i].itemImage %>" width="200">
                                     <% } %>
                                     <h3> <%= data[i].itemDescription %> <%= data[i].itemType %></h3>
                                         <div id="price-amount-<%= data[i].itemCode %>" class="price-and-amount">
@@ -144,9 +142,9 @@
                             <form action="/store-system/webstore-add-to-cart" method="POST">
                                 <div id="food-item-<%= data[i].itemCode %>" class="food-item-section">
                                     <% if (data[i].itemImage == "images/grocery/") { %>
-                                        <img src="images/produce/z-image-not-available.jpg">
+                                        <img src="/public/images/produce/z-image-not-available.jpg">
                                     <% } else { %>
-                                    <img src=<%= data[i].itemImage %> width="200">
+                                    <img src="/public/<%= data[i].itemImage %>" width="200">
                                     <% } %>
                                     <h3> <%= data[i].itemDescription %> <%= data[i].itemType %></h3>
                                         <div id="price-amount-<%= data[i].itemCode %>" class="price-and-amount">

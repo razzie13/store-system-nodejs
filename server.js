@@ -16,7 +16,9 @@ const customerOrders = require("./connections/schemas/schema-orders");
 
 // --------------------------------------------------------------------------------------------------------------------
 
-app.use(express.static('/public'));
+app.use('/public', express.static(__dirname + '/public'));
+app.use('/images', express.static(__dirname + '/public/images/'));
+
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -82,6 +84,8 @@ app.get("/store-system/webstore",function(req,res){
             response = data;
             console.log('success: webstore .get');
             res.render(__dirname + '/webstore/webstore', { data, customerOrderAtWebStore });
+            
+            
         }
     });
     })
@@ -113,7 +117,9 @@ app.post("/store-system/webstore-departments",(function(req,res){
         }
         res.render(__dirname + '/webstore/webstore-departments.ejs', { data, jumpToDepartmentButton, customerOrderAtWebStore });
         console.log("Success : webstore-departments .post");
-        
+        console.log(__dirname + '/images');
+
+        console.log(__dirname + '/public/images');
     });
 })); 
 
